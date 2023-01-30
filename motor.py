@@ -8,7 +8,7 @@ import constants as c
 class MOTOR:
     def __init__(self, jn) -> None:
         self.jointName = jn
-        self.motor_values = np.linspace(0 , 2 * np.pi, 1000)
+        self.motor_values = np.linspace(0 , 2 * np.pi, c.epoch_length)
         self.Prepare_to_Act()
 
     def Prepare_to_Act(self):

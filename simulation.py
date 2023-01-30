@@ -13,23 +13,31 @@ from world import WORLD
 
 class SIMULATION:
 
-    def __init__(self):
-        self.physicsClient = p.connect(p.GUI)
+    def __init__(self, directOrGui):
+        if directOrGui == "DIRECT":
+            self.physicsClient = p.connect(p.DIRECT)
+        else:
+            self.physicsClient = p.connect(p.GUI)
+            
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,-9.8)
         self.robot = ROBOT()
         self.world = WORLD()
 
+
     def __del__(self):
         p.disconnect()
 
     def Run(self):
-         for i in range(1000):
+         for i in range(c.epoch_length):
             p.stepSimulation()
             self.robot.Sense(i)
             self.robot.Think()
             self.robot.Act(i)
             time.sleep(1/60)
+
+    def get_fitness(self):
+        return self.robot.get_fitness()
 
     
 
