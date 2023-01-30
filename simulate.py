@@ -1,9 +1,9 @@
+import sys 
 from simulation import SIMULATION
-import sys
 
-directOrGui = sys.argv[1]
-solutionId = sys.argv[2]
+directOrGUI = sys.argv[1]
+solutionID = sys.argv[2]
 
-x = SIMULATION(directOrGui, solutionId)
-x.Run()
-x.get_fitness()
+simulation = SIMULATION(directOrGUI,int(solutionID))
+simulation.Run()
+simulation.Get_Fitness()

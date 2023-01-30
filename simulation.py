@@ -1,48 +1,44 @@
+import random 
+import numpy
+import time 
 
 import pybullet as p
 import pybullet_data
-import time
 import pyrosim.pyrosim as pyrosim
-import numpy as np
-import random
-import constants as c
-from robot import ROBOT
-from world import WORLD
+        
+import constants as c 
 
+from world import WORLD
+from robot import ROBOT
 
 
 class SIMULATION:
-
-    def __init__(self, directOrGui, id):
-        self.directOrGui = directOrGui
-
-        if directOrGui == "DIRECT":
+    def __init__(self,directOrGUI,solutionID) -> None:
+        self.physicsClient = None 
+        self.directOrGUI = directOrGUI
+        self.solutionID = solutionID
+        if directOrGUI == "DIRECT":
             self.physicsClient = p.connect(p.DIRECT)
         else:
             self.physicsClient = p.connect(p.GUI)
-
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,-9.8)
-        self.robot = ROBOT(id)
+
         self.world = WORLD()
-
-
-    def __del__(self):
-        p.disconnect()
+        self.robot = ROBOT(solutionID)
 
     def Run(self):
-         for i in range(c.epoch_length):
+         for i in range(c.num_steps):
             p.stepSimulation()
             self.robot.Sense(i)
             self.robot.Think()
             self.robot.Act(i)
-            
-            if self.directOrGui == "GUI":
-                time.sleep(1/60)
+            if self.directOrGUI == "GUI":
+                time.sleep(c.sleep_time)
 
-    def get_fitness(self):
-        return self.robot.get_fitness()
+    def Get_Fitness(self):
+        self.robot.Get_Fitness()
+        # print(self.robot.Get_Fitness())
 
-    
-
-
+    def __del__(self):
+        p.disconnect()

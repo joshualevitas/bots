@@ -1,14 +1,16 @@
-
+import numpy 
 import pyrosim.pyrosim as pyrosim
-import numpy as np
+
+import constants as c 
 
 class SENSOR:
-    def __init__(self, ln) -> None:
-        self.ln = ln
-        self.values = np.zeros(1000)
+    def __init__(self,linkName) -> None:
+        self.linkName = linkName
+        self.values = numpy.zeros(c.num_steps)
     
     def Get_Value(self,t):
-        self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.ln)
+        self.values[t] = pyrosim.Get_Touch_Sensor_Value_For_Link(self.linkName)
+        # print(self.values) 
 
     def Save_Values(self):
-        np.save('data/{self.ln}_sensor.npy', self.values)
+        numpy.save('data/{self.linkName}Sensor.npy',self.values)

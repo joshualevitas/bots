@@ -1,40 +1,37 @@
+import copy 
+
 from solution import SOLUTION
-import constants as c
-import copy
+from constants import numberOfGenerations
 
-class HILL_CLIMBER:
-    def __init__(self):
+class HILL_CLIMBER():
+    def __init__(self) -> None:
         self.parent = SOLUTION()
-
-    def evolve(self):
-        self.parent.evaluate("GUI")
-        
-        for currentGeneration in range(c.numberOfGenerations):
+        self.child = None
+    
+    def Evolve(self):
+        self.parent.Evaluate("GUI")
+        for currentGeneration in range(numberOfGenerations):
             self.Evolve_For_One_Generation()
     
+    def Evolve_For_One_Generation(self):
+        self.Spawn()
+        self.Mutate()
+        self.child.Create_Brain()
+        self.child.Evaluate("DIRECT")
+        # print('\n',self.parent.fitness, self.child.fitness)
+        self.Select()
+
     def Spawn(self):
         self.child = copy.deepcopy(self.parent)
 
 
     def Mutate(self):
-        self.child.mutate()
-       
+        self.child.Mutate()
+
 
     def Select(self):
-        if self.child.fitness > self.parent.fitness:
+        if self.child.fitness < self.parent.fitness:
             self.parent = self.child
 
-
-    def Evolve_For_One_Generation(self):
-        self.Spawn()
-
-        self.Mutate()
-
-        self.child.evaluate("DIRECT")
-
-        print(str(self.child.fitness) + ", " + str(self.parent.fitness))
-
-        self.Select()
-
-    def show_best(self):
-        self.parent.evaluate("GUI")
+    def Show_Best(self):
+        self.parent.Evaluate("GUI")

@@ -1,11 +1,14 @@
-import numpy as np
-import matplotlib.pyplot as plt
+import numpy 
+import matplotlib.pyplot as p 
 
-back_leg_data = np.load("data/backlegsensorvalues.npy")
-front_leg_data = np.load("data/frontlegsensorvalues.npy")
-torso_data = np.load("data/torsosensorvalues.npy")
+backdata = numpy.load('data/backvalues.npy')
+frontdata = numpy.load('data/frontvalues.npy')
+targetAngles_back = numpy.load('data/targetvalues_back.npy')
+targetAngles_front = numpy.load('data/targetvalues_front.npy')
 
-plt.plot(back_leg_data, label="back leg")
-plt.plot(front_leg_data, label="front_leg")
-plt.legend()
-plt.show()
+# p.plot(backdata, label = 'BackLeg Data', linewidth = 3)
+# p.plot(frontdata, label = 'FrontLeg Data', linewidth = 3)
+p.plot(range(1000), numpy.sin(targetAngles_back), label = 'Target Back', linewidth = 3)
+p.plot(range(1000), numpy.sin(targetAngles_front), label = 'Target Front', linewidth = 3)
+p.legend()
+p.show()
