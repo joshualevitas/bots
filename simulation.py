@@ -13,7 +13,7 @@ from world import WORLD
 
 class SIMULATION:
 
-    def __init__(self, directOrGui):
+    def __init__(self, directOrGui, id):
         self.directOrGui = directOrGui
 
         if directOrGui == "DIRECT":
@@ -23,7 +23,7 @@ class SIMULATION:
 
         p.setAdditionalSearchPath(pybullet_data.getDataPath())
         p.setGravity(0,0,-9.8)
-        self.robot = ROBOT()
+        self.robot = ROBOT(id)
         self.world = WORLD()
 
 
