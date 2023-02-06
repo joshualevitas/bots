@@ -53,5 +53,4 @@ class ROBOT:
         xCoordinateOfLinkZero = positionOfLinkZero[0] # slight chance this is supposed to be 1
         with open("tmp{}.txt".format(self.solutionID), 'w') as f:
             f.write(str(xCoordinateOfLinkZero))
-            # print('Just wrote ', xCoordinateOfLinkZero)
         os.system("mv tmp{}.txt fitness{}.txt".format(self.solutionID,self.solutionID))
