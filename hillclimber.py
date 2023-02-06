@@ -18,7 +18,7 @@ class HILL_CLIMBER():
         self.Mutate()
         self.child.Create_Brain()
         self.child.Evaluate("DIRECT")
-        # print('\n',self.parent.fitness, self.child.fitness)
+        print('\n',self.parent.fitness, self.child.fitness)
         self.Select()
 
     def Spawn(self):
