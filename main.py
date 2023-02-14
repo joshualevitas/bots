@@ -11,3 +11,5 @@ x = 5
 for i in range(x):
     s = SOLUTION(0)
     s.Evaluate("GUI")
+
+#thank you Austin P. For the help. I was struggling a bit with some aspects and he pointed me in the right direction.
