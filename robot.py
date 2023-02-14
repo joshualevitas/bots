@@ -2,6 +2,7 @@ import pybullet as p
 import pybullet_data
 import pyrosim.pyrosim as pyrosim
 from pyrosim.neuralNetwork import NEURAL_NETWORK
+import math
 
 from sensor import SENSOR
 from motor import MOTOR
@@ -48,9 +49,14 @@ class ROBOT:
         # self.nn.Print()
 
     def Get_Fitness(self):
-        stateOfLinkZero = p.getLinkState(self.robotId,0)
-        positionOfLinkZero = stateOfLinkZero[0]
-        xCoordinateOfLinkZero = positionOfLinkZero[0] # slight chance this is supposed to be 1
+        basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
+        basePosition = basePositionAndOrientation[0]
+        xCoordinateOfLinkZero = basePosition[0]
+        y = basePosition[2]
+        z = basePosition[1]
+
+        dist_squared = ((xCoordinateOfLinkZero - (-10))**2 + (z - 10)**2 + (y - 2)**2)
+        dist = math.sqrt(dist_squared)
         with open("tmp{}.txt".format(self.solutionID), 'w') as f:
-            f.write(str(xCoordinateOfLinkZero))
+            f.write(str(dist))
         os.system("mv tmp{}.txt fitness{}.txt".format(self.solutionID,self.solutionID))
