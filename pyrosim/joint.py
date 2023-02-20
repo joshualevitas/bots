@@ -19,7 +19,7 @@ class JOINT:
     def Save(self,f,jointAxis):
 
         Save_Whitespace(self.depth,f)
-        f.write('<joint name="' + self.name + '" type="' + str(self.type) + '">' + '\n')
+        f.write('<joint name="' + self.name + '" type="' + self.type + '">' + '\n')
 
         Save_Whitespace(self.depth,f)
         f.write('   <parent link="' + self.parent + '"/>' + '\n')

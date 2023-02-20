@@ -34,7 +34,6 @@ class RANDOM_SOLUTION():
 
     def Start_Simulation(self,directorgui, dont_delete = False):
         print("Running simulate")
-        # os.system("python3 simulate.py " + directorgui + " " + str(self.myID) + " 2&>1 &")
         print(self.myID)
         simulate(directorgui,str(self.myID))
         print("Command executed") 
@@ -62,8 +61,6 @@ class RANDOM_SOLUTION():
         height = random.random() + 0.01 
         prevs = [depth, width, height]
       
-        
-        
         if has_sensor:
             self.links.append("Torso")
             pyrosim.Send_Cube(name="Torso", pos=[0,0,0.5] , size=[depth ,width ,height ], color="green",rgba = ["0","1.0","0","1,0"])
@@ -79,11 +76,13 @@ class RANDOM_SOLUTION():
             has_sensor = random.randint(0,1)
             path = random.randint(0, 2)
             
+            type = 'revolute'
+          
             pos = [i/2 if i == path else 0 for i in prevs]
             pos[2] += .5            
     
             depth = random.random() + 0.01 
-            width = random.random() + 0.01 
+            width = random.random() + 0.01
             height = random.random() + 0.01 
             
             block_name = "Block" + str(joint_num)
