@@ -4,3 +4,4 @@ the rest of the body of the creature, we roll a 3 sided die to choose which dire
 Every joint has a motor in my creatures, and the sensor network is fully connected. I'm not entirely sure this is optimal, but I don't quite care about running time at the moment, since the creatures are still fairly small.
 
 
+[Diagram](https://github.com/joshualevitas/bots/blob/a7/IMG_0109.jpg)
