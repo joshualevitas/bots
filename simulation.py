@@ -7,9 +7,10 @@ import pybullet_data
 import pyrosim.pyrosim as pyrosim
         
 import constants as c 
-
 from world import WORLD
 from robot import ROBOT
+
+
 
 
 class SIMULATION:
@@ -25,7 +26,9 @@ class SIMULATION:
         p.setGravity(0,0,-9.8)
 
         self.world = WORLD()
+        print("World set up")
         self.robot = ROBOT(solutionID)
+        print("Simulation set up succesfully")
 
     def Run(self):
          for i in range(c.num_steps):
@@ -38,7 +41,6 @@ class SIMULATION:
 
     def Get_Fitness(self):
         self.robot.Get_Fitness()
-        # print(self.robot.Get_Fitness())
 
     def __del__(self):
         p.disconnect()

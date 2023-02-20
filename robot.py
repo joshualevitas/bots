@@ -1,15 +1,16 @@
+import os 
+import math
 import pybullet as p
-import pybullet_data
 import pyrosim.pyrosim as pyrosim
 from pyrosim.neuralNetwork import NEURAL_NETWORK
-import math
 
 from sensor import SENSOR
 from motor import MOTOR
 
 import constants as c 
 
-import os 
+
+
 
 class ROBOT:
     def __init__(self,solutionID) -> None:
@@ -46,16 +47,15 @@ class ROBOT:
 
     def Think(self):
         self.nn.Update()
-        # self.nn.Print()
 
     def Get_Fitness(self):
         basePositionAndOrientation = p.getBasePositionAndOrientation(self.robotId)
         basePosition = basePositionAndOrientation[0]
         xCoordinateOfLinkZero = basePosition[0]
-        y = basePosition[2]
-        z = basePosition[1]
+        yCoord = basePosition[2]
+        zCoord = basePosition[1]
 
-        dist_squared = ((xCoordinateOfLinkZero - (-10))**2 + (z - 10)**2 + (y - 2)**2)
+        dist_squared = ((xCoordinateOfLinkZero - (-10))**2 + (zCoord - (10))**2 + (yCoord - (2))**2)
         dist = math.sqrt(dist_squared)
         with open("tmp{}.txt".format(self.solutionID), 'w') as f:
             f.write(str(dist))
