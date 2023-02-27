@@ -14,7 +14,7 @@ from robot import ROBOT
 
 
 class SIMULATION:
-    def __init__(self,directOrGUI,solutionID) -> None:
+    def __init__(self,directOrGUI,solutionID, links, joints, delete = True) -> None:
         self.physicsClient = None 
         self.directOrGUI = directOrGUI
         self.solutionID = solutionID
@@ -29,9 +29,11 @@ class SIMULATION:
         p.setGravity(0,0,-9.8)
 
         self.world = WORLD()
-        print("World set up")
-        self.robot = ROBOT(solutionID)
-        print("Simulation set up succesfully")
+        self.robot = ROBOT(solutionID,links,joints,delete=delete)        
+        
+        if not self.robot: 
+            return
+
 
     def Run(self):
          for i in range(c.num_steps):

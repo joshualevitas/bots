@@ -9,7 +9,8 @@ from simulation import SIMULATION
 # simulation.Run()
 # simulation.Get_Fitness()
 
-def simulate(directOrGUI,solutionID):
-    simulation = SIMULATION(directOrGUI,int(solutionID))
+def simulate(directOrGUI, solutionID, links, joints, delete = True):
+    simulation = SIMULATION(directOrGUI,int(solutionID),links,joints, delete=delete)
+    if simulation == None: return 
     simulation.Run()
     simulation.Get_Fitness()

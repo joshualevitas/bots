@@ -9,6 +9,8 @@ class PARALLEL_HILL_CLIMBER():
     def __init__(self) -> None:
         os.system("rm brain*.nndf")
         os.system("rm fitness*.txt")
+        os.system("rm body*.urdf")
+        self.fitness_values = []
         self.parents = {}
         self.children = {}
         self.nextAvailableID = 0
@@ -26,8 +28,8 @@ class PARALLEL_HILL_CLIMBER():
     def Evolve_For_One_Generation(self):
         self.Spawn()
         self.Mutate()
-        for child in self.children.items():
-            child[1].Create_Brain()
+        # for child in self.children.items():
+        #     child[1].Create_Brain()
         self.Evaluate(self.children)
         self.Select()
 
@@ -35,6 +37,12 @@ class PARALLEL_HILL_CLIMBER():
         for i in self.parents.keys():
             self.children[i] = copy.deepcopy(self.parents[i])
             self.children[i].Set_ID(self.nextAvailableID)
+            b = self.children[i].weights.all() != self.parents[i].weights.all() and self.children[i].fitness != self.parents[i].fitness
+            
+            if b:
+                print('No improvement?')
+                exit()
+            
             self.nextAvailableID +=1
 
 
@@ -57,17 +65,34 @@ class PARALLEL_HILL_CLIMBER():
                 min_parent = i[1]
                 min_parent_fitness = min_parent.fitness
 
-        print("Our best fitness value was: ", min_parent_fitness)
+        print("Best Fitness: ", min_parent_fitness)
         min_parent.Create_Brain()
+        min_parent.Recreate_Body()
         min_parent.Start_Simulation("GUI")
         min_parent.Wait_For_Simulation_To_End()
+        
+        os.system("rm brain*.nndf")
+        os.system("rm fitness*.txt")
+        os.system("rm body*.urdf")
+
         min_parent.Create_Brain()
+        min_parent.Recreate_Body()
 
     def Evaluate(self,solutions):
         for i in solutions.keys():
             solutions[i].Start_Simulation("DIRECT")
         for j in solutions.keys():
             solutions[j].Wait_For_Simulation_To_End()
+
+    def get_best_fitness(self):
+        best = None
+        best_fitness = 0
+        for i in self.parents.items():
+            if i[1].fitness >= best_fitness:
+                best = i[1]
+                best_fitness = best.fitness
+        
+        self.fitness_values.append(best_fitness)
 
 
     def Print(self):

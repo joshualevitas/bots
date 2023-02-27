@@ -18,3 +18,10 @@ def random():
 def random_evolution():
     r = SOLUTION(0)
     r.Evaluate("GUI")
+
+def a8_evolve():
+    phc = PARALLEL_HILL_CLIMBER()
+    phc.Evolve()
+    phc.Show_Best()
+
+    return phc.fitness_values
