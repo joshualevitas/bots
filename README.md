@@ -12,8 +12,9 @@ Every child mutates with the following probabilities:
     - Add link (1/20)
     - Remove link (1/20)
 
+# Diagrams
 
-
-[Diagram](...)
+[Generation Diagram](https://imgur.com/W7ry4HE)
+[Evolution Diagram](https://imgur.com/NmZsP6A)
 
 Credit to /r/ludobots and pyrosim. All of my work is on top of these two sources, and relies heavily on the work of these two sources in order to try to learn something new.
