@@ -1,3 +1,7 @@
+# # I did something to my a6.py file and now it is not working. I am not sure what I did, but I was unable to fix it.
+# # I was able to build my a7 on top of a friend's (austin p.) a6 instead. Much of the original files are similar except for 
+# # the ones related to this assignment (i.e. solution)
+
 import numpy 
 import random 
 import os 
@@ -34,6 +38,7 @@ class SOLUTION():
 
     def Start_Simulation(self,directorgui, dont_delete = False):
         print("Running simulate")
+        # os.system("python3 simulate.py " + directorgui + " " + str(self.myID) + " 2&>1 &")
         print(self.myID)
         simulate(directorgui,str(self.myID))
         print("Command executed") 
@@ -55,108 +60,129 @@ class SOLUTION():
 
     def Create_Body(self):
         pyrosim.Start_URDF("body.urdf")
-        has_sensor = random.randint(0,1)
+        random_sensor = random.randint(0,1)
         depth = random.random() + 0.01
-        width = random.random() + 0.01 
+        width = random.random() * 2 + 0.01 
         height = random.random() + 0.01 
-        prevs = [depth, width, height]
-      
-        if has_sensor:
+        
+        # prevs = [depth, width, height]
+        prev_width = width
+        prev_depth = depth 
+        prev_height = height 
+
+        prev_direction = 1
+        if random_sensor:
             self.links.append("Torso")
             pyrosim.Send_Cube(name="Torso", pos=[0,0,0.5] , size=[depth ,width ,height ], color="green",rgba = ["0","1.0","0","1,0"])
         else:
             pyrosim.Send_Cube(name="Torso", pos=[0,0,0.5] , size=[depth ,width ,height ])
         
-        random_num_blocks = random.randint(1,6)
+        random_num_blocks = random.randint(1,10)
         parent = "Torso"
         joint_num = 0
-        self.numMotorNeurons = random_num_blocks
-
+        self.numMotorNeurons = random_num_blocks 
+        
         for i in range (random_num_blocks):
-            has_sensor = random.randint(0,1)
-            path = random.randint(0, 2)
-            
-            type = 'revolute'
-          
-            pos = [i/2 if i == path else 0 for i in prevs]
-            pos[2] += .5            
-    
+            random_sensor = random.randint(0,1)
+         
             depth = random.random() + 0.01 
-            width = random.random() + 0.01
+            width = random.random() * 2 + 0.01 
             height = random.random() + 0.01 
-            
+
+            direction = random.randint(1,3)
+
             block_name = "Block" + str(joint_num)
             joint_name = parent + "_" + block_name
 
-            if i == 0:
-                pyrosim.Send_Joint(name = joint_name   , parent= parent , child = block_name , type = type, position = pos, jointAxis= '1 0 0')
-                pos[2] -= .5
-                if has_sensor:
-                    pyrosim.Send_Cube(name = block_name, pos= pos,size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
-                else:
-                    pyrosim.Send_Cube(name = block_name, pos= pos,size = [depth,width,height])
-           
+            type = 'revolute'
+            if random.random() > .9:
+                type = 'floating'
 
-            else:
-                if path == 0:
-                    if prev_path == 0:
-                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [0,pos[1]/2,0], jointAxis= '1 0 0')
-                    elif prev_path == 1:   
-                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [pos[0]/2, pos[0]/2,0], jointAxis= '1 0 0')
-                    else:
-                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [0,pos[1]/2,pos[2]/2], jointAxis= '1 0 0')
-       
-                    if has_sensor:
+
+            if direction == 1:
+                if i == 0:
+                    pyrosim.Send_Joint(name = joint_name   , parent= parent , child = block_name , 
+                        type = type, position = [0,prev_width/2,0.5], jointAxis= '1 0 0')
+                    if random_sensor:
                         pyrosim.Send_Cube(name = block_name, pos= [0,width/2,0],size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
                     else:
                         pyrosim.Send_Cube(name = block_name, pos= [0,width/2,0],size = [depth,width,height])
-                
-                elif path == 1:
-                    if prev_path == 0:
+                else:
+                    if prev_direction == 2:
                         pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [pos[0]/2,pos[1]/2,0], jointAxis= '1 0 0')
-                    elif prev_path == 1:   
+                            type = type, position = [prev_depth/2,prev_width/2,0], jointAxis= '1 0 0')
+                    elif prev_direction == 3:
                         pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [pos[0]/2,0,pos[2]/2], jointAxis= '1 0 0')
+                        type = type, position = [0,prev_width/2,prev_height/2], jointAxis= '1 0 0')
                     else:
                         pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [0,pos[1]/2,pos[2]/2], jointAxis= '1 0 0')
-       
-                    if has_sensor:
+                        type = type, position = [0,prev_width/2,0], jointAxis= '1 0 0')   
+                    if random_sensor:
+                        pyrosim.Send_Cube(name = block_name, pos= [0,width/2,0],size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
+                    else:
+                        pyrosim.Send_Cube(name = block_name, pos= [0,width/2,0],size = [depth,width,height])
+
+            elif direction == 2:
+                if i == 0:
+                    pyrosim.Send_Joint(name = joint_name   , parent= parent , child = block_name , 
+                        type = type, position = [prev_depth/2,0,0.5], jointAxis= '1 0 0')
+                    if random_sensor:
+                        pyrosim.Send_Cube(name = block_name, pos= [depth/2,0,0],size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
+                    else:
+                        pyrosim.Send_Cube(name = block_name, pos= [depth/2,0,0],size = [depth,width,height])
+                else:
+                    if prev_direction == 1:
+                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
+                            type = type, position = [prev_depth/2,prev_width/2,0], jointAxis= '1 0 0')
+                    elif prev_direction == 3:
+                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
+                            type = type, position = [prev_depth/2,0,prev_height/2], jointAxis= '1 0 0')
+                    else:
+                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
+                            type = type, position = [prev_depth,0,0], jointAxis= '1 0 0')                       
+                    if random_sensor:
                         pyrosim.Send_Cube(name = block_name, pos= [depth/2,0,0],size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
                     else:
                         pyrosim.Send_Cube(name = block_name, pos= [depth/2,0,0],size = [depth,width,height])
 
-                
-                else:
-                    if prev_path == 0:
-                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [0,pos[1]/2,pos[2]/2], jointAxis= '1 0 0')
-                    elif prev_path == 1:   
-                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [pos[0]/2, 0, pos[2]/2], jointAxis= '1 0 0')
-                    else:
-                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
-                        type = type, position = [0,0,pos[2]/2], jointAxis= '1 0 0')
-       
-                    if has_sensor:
-                        pyrosim.Send_Cube(name = block_name, pos= [0,0, height/2],size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
+            elif direction == 3:
+                if i == 0:
+                    pyrosim.Send_Joint(name = joint_name   , parent= parent , child = block_name , 
+                        type = type, position = [0,0,0.5 + prev_height / 2], jointAxis= '1 0 0')
+                    if random_sensor:
+                        pyrosim.Send_Cube(name = block_name, pos= [0,0,height/2],size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
                     else:
                         pyrosim.Send_Cube(name = block_name, pos= [0,0,height/2],size = [depth,width,height])
-                
-
+                else:
+                    if prev_direction == 1:
+                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
+                            type = type, position = [0,prev_width/2,prev_height/2], jointAxis= '1 0 0')
+                    elif prev_direction == 2:
+                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
+                         type = type, position = (prev_depth/2,0,prev_height/2), jointAxis= '1 0 0')
+                    else: 
+                        pyrosim.Send_Joint(name = joint_name , parent= parent , child = block_name , 
+                        type = type, position = (0,0,prev_height), jointAxis= '1 0 0')
+                    if random_sensor:
+                        pyrosim.Send_Cube(name = block_name, pos= [0,0,height/2],size = [depth,width,height],color="green",rgba = ["0","1.0","0","1,0"])
+                    else:
+                        pyrosim.Send_Cube(name = block_name, pos= [0,0,height/2],size = [depth,width,height])                
+            
+        
 
             parent = block_name
-            prev_path = path
-            prevs = [depth, width, height]
+            prev_width = width
+            prev_depth = depth
+            prev_height = height
+            prev_direction = direction
             joint_num +=1
-            if has_sensor:
+
+            if random_sensor:
                 self.links.append(block_name)
                 self.numSensorsNeurons +=1
+
             self.joints.append(joint_name)
+       
 
         pyrosim.End()
 
@@ -165,15 +191,17 @@ class SOLUTION():
         for link in self.links: 
             pyrosim.Send_Sensor_Neuron(name = self.idNum , linkName = link)
             self.idNum +=1 
-        
+
+
         for joint in self.joints:
             pyrosim.Send_Motor_Neuron( name = self.idNum , jointName = joint)
             self.idNum +=1
-        
+    
+
 
         for currentRow in range(self.numSensorsNeurons): 
          for currentColumn in range(self.numMotorNeurons): 
-             pyrosim.Send_Synapse(sourceNeuronName = currentRow , targetNeuronName = currentColumn + self.numSensorsNeurons, weight = self.weights[currentRow][currentColumn])
+             pyrosim.Send_Synapse( sourceNeuronName = currentRow , targetNeuronName = currentColumn + self.numSensorsNeurons, weight = self.weights[currentRow][currentColumn] )
         
         pyrosim.End()
 
@@ -185,8 +213,3 @@ class SOLUTION():
     
     def Set_ID(self, ID):
         self.myID = ID
-
-
-# I did something to my a6.py file and now it is not working. I am not sure what I did, but I was unable to fix it.
-# I was able to build my a7 on top of a friend's (austin p.) a6 instead. Much of the original files are similar except for 
-# the ones related to this assignment (i.e. solution)

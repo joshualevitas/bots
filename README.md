@@ -5,3 +5,5 @@ Every joint has a motor in my creatures, and the sensor network is fully connect
 
 
 [Diagram](https://imgur.com/0QQSdsr)
+
+...Credit to Ludobots...
