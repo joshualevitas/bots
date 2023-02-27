@@ -6,11 +6,12 @@ Initially, every joint has a motor in my creatures, and I add a sensor with 1/2 
 
 # How creatures mutate each generation
 Every child mutates with the following probabilities:
-    - Remove motor Neuron / Add motor neuron (each with 1/20 probability) 
-    - Change neuron weight (3/4)
-    - Add / Remove sensor neuron (1/5)
-    - Add link (1/20)
-    - Remove link (1/20)
+
+    * Remove motor Neuron / Add motor neuron (each with 1/20 probability) 
+    * Change neuron weight (3/4)
+    * Add / Remove sensor neuron (1/5)
+    * Add link (1/20)
+    * Remove link (1/20)
 
 # Diagrams
 
