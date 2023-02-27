@@ -17,4 +17,6 @@ Every child mutates with the following probabilities:
 [Generation Diagram](https://imgur.com/W7ry4HE)
 [Evolution Diagram](https://imgur.com/NmZsP6A)
 
+[Fitness Curve](https://github.com/joshualevitas/bots/blob/a8/Fitnesses.png?raw=true)
+
 Credit to /r/ludobots and pyrosim. All of my work is on top of these two sources, and relies heavily on the work of these two sources in order to try to learn something new.
