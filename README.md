@@ -14,8 +14,7 @@ Every child mutates with the following probabilities:
 
 # Diagrams
 
-[Generation Diagram](https://imgur.com/W7ry4HE)
-[Evolution Diagram](https://imgur.com/NmZsP6A)
+[Generation Diagram](https://imgur.com/W7ry4HE), [Evolution Diagram](https://imgur.com/NmZsP6A)
 
 [Fitness Curve](https://github.com/joshualevitas/bots/blob/a8/Fitnesses.png?raw=true)
 
